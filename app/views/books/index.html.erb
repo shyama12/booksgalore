@@ -1,7 +1,21 @@
 <h1>Book Index</h1>
 <ul>
-<% @books.each do |book| %>
-<li><%= book.title %></li>
+  <% @books.each do |book| %>
+    <li>
+      <div class="book-card">
+        <!-- img div -->
+        <div class="book-card-info">
+          <div class="book-card-text">
+            <%= book.title %>
+            <%= book.author %>
+            </div>
+          <div class="book-card-price">
+            <%= book.price %>
+          </div>
+        </div>
+      </div>
+    </li>
 
-<% end %>
+
+  <% end %>
 </ul>
