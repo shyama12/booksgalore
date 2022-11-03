@@ -8,7 +8,9 @@ export default class extends Controller {
 
 var options = {
   strings: ['books..', ' books, books....'],
-  typeSpeed: 40
+  typeSpeed: 40,
+  loop: true,
+  showCursor: false
 };
 
  new Typed(this.element, options);
