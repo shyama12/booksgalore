@@ -1,1 +1,24 @@
 // Specific CSS for your home-page
+.banner {
+  height: 100vh;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("homepage-background-image.jpeg");
+  background-size: cover;
+  background-position: center;
+  h2 {
+    color: white;
+  font-weight: bold;
+  font-size: 45px;
+  }
+  .btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    margin-top: 15px;
+    font-weight: lighter;
+    color: white;
+  }
+}
