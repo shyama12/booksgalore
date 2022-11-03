@@ -1,0 +1,15 @@
+<h1>Add your book</h1>
+
+<%= form_with model: @book do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :author %>
+  <%= f.text_field :author %>
+  <%= f.label :genre %>
+  <%= f.text_field :genre %>
+  <%= f.label :summary %>
+  <%= f.text_field :summary %>
+  <%= f.label :price %>
+  <%= f.number_field :price %>
+  <%= f.submit %>
+<% end %>
