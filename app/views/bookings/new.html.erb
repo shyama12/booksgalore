@@ -1,0 +1,12 @@
+<div class="col-sm-6 bg-white rounded-4 p-5 shadow-sm align-self-center m-5">
+<h1 class="pb-5">Borrow <%= @book.title %></h1>
+  <%= simple_form_for [@book, @booking] do |f| %>
+    <%= f.input :start_date, as: :date, start_year: Date.today.year,
+                end_year: Date.today.year + 12,
+                order: [:day, :month, :year] %>
+    <%= f.input :end_date, as: :date, start_year: Date.today.year,
+                end_year: Date.today.year + 12,
+                order: [:day, :month, :year] %>
+    <%= f.submit "Request to rent this book", class: "btn btn-dark mt-5 w-100" %>
+  <% end %>
+</div>

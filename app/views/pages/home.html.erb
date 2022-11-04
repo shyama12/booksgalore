@@ -1,2 +1,19 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+  <div class="banner text-center">
+    <h2>Books, books,  <span data-controller="typed">books</span></h2>
+    <%= link_to "Browse all books",  books_path, class:'btn btn-success' %>
+  </div>
+
+   <div class="header">
+    <h2> Books of the Week</h2>
+    </div>
+    <div class="cards">
+      <% @books.each do |book| %>
+      <div class="card-category">
+        <%= book.title %>
+      <p>
+        <%= link_to "Show this book"%>
+      </p>
+      </div>
+
+      <% end %>
+    </div>

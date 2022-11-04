@@ -1,0 +1,17 @@
+<% if @bookings.count.zero? %>
+  <p>You do not have any bookings!</p>
+<% else %>
+<% @bookings.each do |booking| %>
+  <div class="card mb-5 d-flex flex-row" style="height: 18rem; overflow: hidden;">
+    <div class="card-image border m-2">
+      <%= image_tag "https://images.unsplash.com/photo-1621944190310-e3cca1564bd7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80", class: "h-100 w-100", style: "object-fit: contain;" %>
+    </div>
+    <div class="card-body w-70">
+      <p><strong>Title </strong><%= booking.book.title %></p>
+      <p><strong>Author </strong><%= booking.book.author %></p>
+      <p><strong>Return Date </strong><%= booking.end_date %></p>
+      <p><strong>Price per day </strong><%= booking.book.price %></p>
+    </div>
+  </div>
+<% end %>
+<% end %>
