@@ -3,16 +3,17 @@
     <%= link_to "Browse all books",  books_path, class:'btn btn-success' %>
   </div>
 
-  <div class="cards">
-    <div class="card-category">
-      Breakfast
+   <div class="header">
+    <h2> Books of the Week</h2>
     </div>
+    <div class="cards">
+      <% @books.each do |book| %>
+      <div class="card-category">
+        <%= book.title %>
+      <p>
+        <%= link_to "Show this book"%>
+      </p>
+      </div>
 
-      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/lunch.jpg)">
-      Lunch
+      <% end %>
     </div>
-
-    <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/dinner.jpg)">
-      Dinner
-    </div>
-  </div>
