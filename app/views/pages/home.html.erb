@@ -7,14 +7,13 @@
     <h2> Books of the Week</h2>
     </div>
     <div class="cards">
+      <% @books.each do |book| %>
       <div class="card-category">
-        Book 1
+        <%= book.title %>
+      <p>
+        <%= link_to "Show this book"%>
+      </p>
       </div>
 
-      <div class="card-category">
-       Book 2
-      </div>
-      <div class="card-category">
-       Book 3
-      </div>
+      <% end %>
     </div>
