@@ -59,7 +59,7 @@ html_doc.search(".book-item").first(20).each do |book|
                   user_id: rand(User.first.id..User.last.id),
                   summary: html_doc_book.search(".item-excerpt").text.strip.delete_suffix!("show more").strip)
   photo_file = URI.open(html_doc_book.search(".item-img-content img").attribute("src"))
-  book.photo.attach(io: photo_file, filename: "book#{book.id}_image.jpg", content_type: "image/jpg")
+  book.photo.attach(io: photo_file, filename: "book#{book.id}_image.png", content_type: "image/png")
   book.save
   puts "Created book with id #{book.id}"
 end
