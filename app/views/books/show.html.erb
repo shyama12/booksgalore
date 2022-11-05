@@ -1,8 +1,19 @@
-<div class="card-category">
+<div class="container m-5">
+  <h1>Book <%= @book.title %></h1>
+  <%= cl_image_tag @book.photo.key, class: "my-5", crop: :fill %>
+  <br>
+  <strong>Author:</strong> <%= @book.author %>
+  <br>
+  <strong>Genre:</strong> <%= @book.genre %>
+  <br>
+  <strong>Price per day:</strong> £<%= @book.price %>
+  <br>
+  <strong>Owner:</strong> <%= @book.user.first_name %> <%= @book.user.last_name %>
 
-  <h1><%= @book.title %></h1>
-  <%= cl_image_tag @article.photo.key, height: 300, width: 400, crop: :fill %>
-  <h4><%= @restaurant.author %></h3>
-  <h4><%= @restaurant.genre %></h4>
-  <p><%= @book.summary %></p>
+  <br><br>
+  <strong>Summary:</strong>
+  <br>
+  <%= @book.summary %>
+  <br><br>
+  <%= link_to "Check availability", new_book_booking_path(@book), class: "btn btn-primary" %>
 </div>
