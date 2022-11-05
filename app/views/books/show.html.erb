@@ -1,0 +1,8 @@
+<div class="card-category">
+
+  <h1><%= @book.title %></h1>
+  <%= cl_image_tag @article.photo.key, height: 300, width: 400, crop: :fill %>
+  <h4><%= @restaurant.author %></h3>
+  <h4><%= @restaurant.genre %></h4>
+  <p><%= @book.summary %></p>
+</div>
