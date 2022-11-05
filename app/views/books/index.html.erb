@@ -1,7 +1,25 @@
-<h1>Book Index</h1>
-<ul>
-<% @books.each do |book| %>
-<li><%= book.title %></li>
-
-<% end %>
-</ul>
+<div class="header">
+    <h2> Books Index</h2>
+  </div>
+  <div class="cards-wrapper">
+      <% @books.each do |book| %>
+        <div class="card-product">
+          <%= cl_image_tag book.photo.key, alt: "Picture of book cover"%>
+          <div class="card-product-infos">
+            <h2><%= book.title %></h2>
+            <p>By <%= book.author %></p>
+            <br>
+            <div class="general-info-and-button">
+              <div class="general-info">
+                <p><strong>Genre: </strong><%= book.genre %></p>
+                <p><strong>Price per day: </strong>£<%= book.price %></p>
+                <p><strong>Owner: </strong><%= book.user.first_name %> <%= book.user.last_name %></p>
+              </div>
+              <div class="general-info-btn">
+                <%= link_to "See more", book_path(book) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+  </div>
