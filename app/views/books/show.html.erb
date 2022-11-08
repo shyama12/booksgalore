@@ -1,20 +1,37 @@
-<div class="container m-5">
-  <h1>Book <%= @book.title %></h1>
-  <%= cl_image_tag @book.photo.key, class: "my-5", crop: :fill %>
-  <br>
-  <strong>Author:</strong> <%= @book.author %>
-  <br>
-  <strong>Genre:</strong> <%= @book.genre %>
-  <br>
-  <strong>Price per day:</strong> £<%= @book.price %>
-  <br>
-  <strong>Owner:</strong> <%= @book.user.first_name %> <%= @book.user.last_name %>
-
-  <br><br>
-  <strong>Summary:</strong>
-  <br>
-  <%= @book.summary %>
-  <br><br>
-  <%= link_to "Check availability", new_book_booking_path(@book), class: "btn btn-primary" %>
+<div class="row">
+  <div class="col-lg-8 p-5">
+    <h1><%= @book.title %></h1>
+    <div class="d-flex justify-content-start align-items-center">
+      <%= cl_image_tag @book.photo.key, class: "my-5", crop: :fill, width: '280', height: '430' %>
+      <br>
+    </div>
+    <div class="my-5">
+      <strong>Author:</strong> <%= @book.author %>
+      <br>
+      <strong>Genre:</strong> <%= @book.genre %>
+      <br>
+      <strong>Price per day: </strong>£ <%= format('%.2f', @book.price) %>
+      <br>
+      <strong>Owner: </strong> <%= @book.user.first_name %> <%= @book.user.last_name %>
+      <br><br>
+    </div>
+    <strong>Summary: </strong>
+    <br>
+    <%= @book.summary %>
+    <br><br>
+  </div>
+  <div class="col-lg-4 p-5">
+    <div class="container bg-white shadow-sm p-5">
+      <h1 class="pb-5">Rent this book</h1>
+      <%= simple_form_for [@book, @booking] do |f| %>
+        <%= f.input :start_date, as: :date, start_year: Date.today.year,
+                    end_year: Date.today.year + 12,
+                    order: [:day, :month, :year] %>
+        <%= f.input :end_date, as: :date, start_year: Date.today.year,
+                    end_year: Date.today.year + 12,
+                    order: [:day, :month, :year] %>
+        <%= f.submit "Request this book", class: "btn-black" %>
+      <% end %>
+    </div>
+  </div>
 </div>
-

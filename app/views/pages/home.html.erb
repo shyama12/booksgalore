@@ -17,7 +17,7 @@
             <div class="general-info-and-button">
               <div class="general-info">
                 <p><strong>Genre: </strong><%= book.genre %></p>
-                <p><strong>Price per day: </strong>£<%= book.price %></p>
+                <p><strong>Price per day: </strong>£ <%= format('%.2f', book.price) %></p>
                 <p><strong>Owner: </strong><%= book.user.first_name %> <%= book.user.last_name %></p>
               </div>
               <div class="general-info-btn">

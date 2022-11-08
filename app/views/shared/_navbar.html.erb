@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to root_path, class: "navbar-brand" do %>
-      <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/4/42/Otvorena_knjiga.JPG", class: "rounded-circle", style: "width: 40px; height: 40px;" %>
+      <%#= image_tag "https://upload.wikimedia.org/wikipedia/commons/4/42/Otvorena_knjiga.JPG", class: "rounded-circle", style: "width: 40px; height: 40px;" %>
       <%= image_tag('logo-text.png', style: 'height:30px; width:auto') %>
     <% end %>
 
@@ -13,7 +13,7 @@
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item dropdown">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+            <%= cl_image_tag current_user.photo.key, class: "avatar dropdown-toggle", width: 40, height: 40, id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Post your book", new_book_path, class: "dropdown-item" %>
               <%= link_to "View your bookings", bookings_path, class: "dropdown-item" %>

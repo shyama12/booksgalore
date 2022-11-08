@@ -1,0 +1,42 @@
+.simple_form {
+  background-color: $white;
+}
+
+.form-label {
+  margin-top: 8px;
+}
+
+.form-control {
+  margin-bottom: 18px;
+  background-color: $white;
+}
+
+.form-select {
+  margin-bottom: 18px;
+  background-color: $white;
+}
+
+.form-control:focus {
+  margin-bottom: 8px;
+  background-color: $white;
+}
+
+.form-check-input {
+  background-color: $white;
+}
+
+.form-actions .btn {
+  background-color: $black;
+  color: $white;
+  width: 100%;
+  margin: 40px 0;
+  padding: 10px 0;
+}
+
+.btn-black {
+  background-color: $black;
+  color: $white;
+  width: 100%;
+  margin: 40px 0;
+  padding: 10px 0;
+}
