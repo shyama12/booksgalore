@@ -5,9 +5,8 @@ import Typed from 'typed.js';
 export default class extends Controller {
   connect() {
 var options = {
-  strings: ['books..', ' books, books....'],
-  typeSpeed: 40,
-  loop: true,
+  strings: ['Are you a book-lover ready to dive into a new book ', 'Or a colectionist willing to have an extra income'],
+  typeSpeed: 10,
   showCursor: false
 };
 
