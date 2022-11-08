@@ -20,6 +20,10 @@ class BookingsController < ApplicationController
     end
   end
 
+  def requested
+    @bookings = Booking.joins(:books).where('books.user_id': current_user.id)
+  end
+
   private
 
   def booking_params

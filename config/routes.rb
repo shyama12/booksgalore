@@ -8,5 +8,9 @@ Rails.application.routes.draw do
   resources :books, only: [:index, :new, :create, :show] do
     resources :bookings, only: [:new, :create]
   end
-  resources :bookings, only: [:index]
+  resources :bookings, only: [:index] do
+    collection do
+      get :requested
+    end
+  end
 end
