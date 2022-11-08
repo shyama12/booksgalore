@@ -3,11 +3,6 @@ class BookingsController < ApplicationController
     @bookings = Booking.where(user_id: current_user.id)
   end
 
-  def new
-    @book = Book.find(params[:book_id])
-    @booking = Booking.new
-  end
-
   def create
     @book = Book.find(params[:book_id])
     @booking = Booking.new(booking_params)
@@ -17,9 +12,9 @@ class BookingsController < ApplicationController
     @booking.book.available = false
     @booking.book.save
     if @booking.save
-      redirect_to books_path
+      redirect_to bookings_path, notice: "Booking request sent to #{@booking.book.user.first_name} #{@booking.book.user.last_name} for #{@booking.book.title}"
     else
-      render :new, status: :unprocessable_entity
+      render 'books/show', status: :unprocessable_entity
     end
   end
 
