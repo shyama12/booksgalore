@@ -13,6 +13,9 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     @booking.book = @book
     @booking.user = current_user
+    @booking.status = "requested"
+    @booking.book.available = false
+    @booking.book.save
     if @booking.save
       redirect_to books_path
     else
@@ -21,7 +24,7 @@ class BookingsController < ApplicationController
   end
 
   def requested
-    @bookings = Booking.joins(:books).where('books.user_id': current_user.id)
+    @bookings = Booking.joins(:book).where('book.user_id': current_user.id)
   end
 
   private

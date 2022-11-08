@@ -10,10 +10,18 @@
       <h3><strong></strong><%= booking.book.title %></h3>
       <p><strong>By </strong><%= booking.book.author %></p>
       <br>
-      <p><strong>Start Date: </strong><%= booking.start_date %></p>
-      <p><strong>Return Date: </strong><%= booking.end_date %></p>
-      <p><strong>Price per day: </strong><%= booking.book.price %></p>
-      <p><strong>Owner: </strong><%= booking.book.user.first_name %> <%= booking.book.user.last_name %></p>
+      <div class="d-flex justify-content-between">
+        <div>
+          <p><strong>Start Date: </strong><%= booking.start_date %></p>
+          <p><strong>Return Date: </strong><%= booking.end_date %></p>
+          <p><strong>Price per day: </strong><%= booking.book.price %></p>
+          <p><strong>Owner: </strong><%= booking.book.user.first_name %> <%= booking.book.user.last_name %></p>
+        </div>
+        <div class="align-self-end">
+          <%= link_to "Accept Request", "#" %>
+          <%= link_to "Decline Request", "#" %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
