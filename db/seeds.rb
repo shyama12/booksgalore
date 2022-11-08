@@ -18,7 +18,7 @@ shyama = User.new(first_name: "Shyama",
                   address: Faker::Address.street_address,
                   email: "shyama@booksgalore.com",
                   password: '123456')
-shyama.photo.attach(io: File.open("../app/assets/images/shyama.jfif"), filename: "shyama_image.png", content_type: "image/png")
+shyama.photo.attach(io: File.open("./app/assets/images/shyama.jfif"), filename: "shyama_image.png", content_type: "image/png")
 shyama.save
 
 ana = User.new(first_name: "Ana",
@@ -26,7 +26,7 @@ ana = User.new(first_name: "Ana",
                address: Faker::Address.street_address,
                email: "ana@booksgalore.com",
                password: '123456')
-ana.photo.attach(io: File.open("../app/assets/images/ana.png"), filename: "ana_image.png", content_type: "image/png")
+ana.photo.attach(io: File.open("./app/assets/images/ana.png"), filename: "ana_image.png", content_type: "image/png")
 ana.save
 
 verity = User.new(first_name: "Verity",
@@ -34,7 +34,7 @@ verity = User.new(first_name: "Verity",
                   address: Faker::Address.street_address,
                   email: "verity@booksgalore.com",
                   password: '123456')
-verity.photo.attach(io: File.open("../app/assets/images/verity.jfif"), filename: "verity_image.png", content_type: "image/png")
+verity.photo.attach(io: File.open("./app/assets/images/verity.jfif"), filename: "verity_image.png", content_type: "image/png")
 verity.save
 
 seb = User.new(first_name: "Seb",
@@ -42,7 +42,7 @@ seb = User.new(first_name: "Seb",
                address: Faker::Address.street_address,
                email: "seb@booksgalore.com",
                password: '123456')
-seb.photo.attach(io: File.open("../app/assets/images/seb.jfif"), filename: "seb_image.png", content_type: "image/png")
+seb.photo.attach(io: File.open("./app/assets/images/seb.jfif"), filename: "seb_image.png", content_type: "image/png")
 seb.save
 
 puts "Created #{User.count} users"
