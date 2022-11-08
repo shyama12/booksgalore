@@ -13,29 +13,37 @@ Booking.destroy_all
 User.destroy_all
 puts "DB is clean"
 
-User.create(first_name: "Shyama",
-            last_name: "Menon",
-            address: Faker::Address.street_address,
-            email: "shyama@booksgalore.com",
-            password: '123456')
+shyama = User.new(first_name: "Shyama",
+                  last_name: "Menon",
+                  address: Faker::Address.street_address,
+                  email: "shyama@booksgalore.com",
+                  password: '123456')
+shyama.photo.attach(io: File.open("/home/shyama/code/shyama12/booksgalore/app/assets/images/shyama.jfif"), filename: "shyama_image.png", content_type: "image/png")
+shyama.save
 
-User.create(first_name: "Ana",
-            last_name: "Mikic",
-            address: Faker::Address.street_address,
-            email: "ana@booksgalore.com",
-            password: '123456')
+ana = User.new(first_name: "Ana",
+               last_name: "Mikic",
+               address: Faker::Address.street_address,
+               email: "ana@booksgalore.com",
+               password: '123456')
+ana.photo.attach(io: File.open("/home/shyama/code/shyama12/booksgalore/app/assets/images/ana.png"), filename: "ana_image.png", content_type: "image/png")
+ana.save
 
-User.create(first_name: "Verity",
-            last_name: "Shuker",
-            address: Faker::Address.street_address,
-            email: "verity@booksgalore.com",
-            password: '123456')
+verity = User.new(first_name: "Verity",
+                  last_name: "Shuker",
+                  address: Faker::Address.street_address,
+                  email: "verity@booksgalore.com",
+                  password: '123456')
+verity.photo.attach(io: File.open("/home/shyama/code/shyama12/booksgalore/app/assets/images/verity.jfif"), filename: "verity_image.png", content_type: "image/png")
+verity.save
 
-User.create(first_name: "Seb",
-            last_name: "Rojas",
-            address: Faker::Address.street_address,
-            email: "seb@booksgalore.com",
-            password: '123456')
+seb = User.new(first_name: "Seb",
+               last_name: "Rojas",
+               address: Faker::Address.street_address,
+               email: "seb@booksgalore.com",
+               password: '123456')
+seb.photo.attach(io: File.open("/home/shyama/code/shyama12/booksgalore/app/assets/images/seb.jfif"), filename: "seb_image.png", content_type: "image/png")
+seb.save
 
 puts "Created #{User.count} users"
 
@@ -49,15 +57,16 @@ html_doc.search(".book-item").first(20).each do |book|
     book_url = "https://www.bookdepository.com/#{book.search(".item-img a").attribute("href")}"
     html_file_book = URI.open(book_url).read
   rescue => e
+    puts e
     next
   end
   html_doc_book = Nokogiri::HTML(html_file_book)
   book = Book.new(title: html_doc_book.search("h1").text.strip,
                   author: html_doc_book.search(".author-info a").text.strip,
                   genre: Faker::Book.genre,
-                  price: rand(100..300) / 100,
+                  price: rand(100..500) / 100,
                   user_id: rand(User.first.id..User.last.id),
-                  summary: html_doc_book.search(".item-excerpt").text.strip.delete_suffix!("show more").strip)
+                  summary: html_doc_book.search(".item-excerpt").text.strip.delete_suffix!("show more").strip[0, 1000])
   photo_file = URI.open(html_doc_book.search(".item-img-content img").attribute("src"))
   book.photo.attach(io: photo_file, filename: "book#{book.id}_image.png", content_type: "image/png")
   book.save
