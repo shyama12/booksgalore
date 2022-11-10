@@ -1,0 +1,13 @@
+<%= link_to book_path(book), style: "color: black; text-decoration: none;" do %>
+  <div class="card-product">
+    <%= cl_image_tag book.photo.key, alt: "Picture of book cover"%>
+    <div class="card-product-infos">
+      <h2><%= book.title %></h2>
+      <p>By <%= book.author %></p>
+      <br>
+      <p><strong>Genre: </strong><%= book.genre %></p>
+      <p><strong>Price per day: </strong>£ <%= format('%.2f', book.price) %></p>
+      <p><strong>Owner: </strong><%= book.user.first_name %> <%= book.user.last_name %></p>
+    </div>
+  </div>
+<% end %>

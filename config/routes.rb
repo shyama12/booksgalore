@@ -8,8 +8,14 @@ Rails.application.routes.draw do
   resources :books, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
     resources :bookings, only: [:create]
     resources :reviews, only: :create
-
   end
-  resources :bookings, only: [:index]
-
+  resources :bookings, only: [:index] do
+    collection do
+      get :requested
+    end
+    member do
+      patch :confirm
+      patch :decline
+    end
+  end
 end
