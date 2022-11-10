@@ -1,28 +1,39 @@
-<% if @bookings.count.zero? %>
-  <p>You do not have any requests!</p>
-<% else %>
-<% @bookings.each do |booking| %>
-  <div class="card mb-5 d-flex flex-row my-5" style="height: 18rem; overflow: hidden;">
-    <div class="card-image border m-2">
-      <%= cl_image_tag booking.book.photo.key, class: "h-100 w-100", style: "object-fit: contain;" %>
-    </div>
-    <div class="card-body w-70">
-      <h3><strong></strong><%= booking.book.title %></h3>
-      <p><strong>By </strong><%= booking.book.author %></p>
-      <br>
-      <div class="d-flex justify-content-between">
-        <div>
-          <p><strong>Start Date: </strong><%= booking.start_date %></p>
-          <p><strong>Return Date: </strong><%= booking.end_date %></p>
-          <p><strong>Price per day: </strong><%= booking.book.price %></p>
-          <p><strong>Owner: </strong><%= booking.book.user.first_name %> <%= booking.book.user.last_name %></p>
+<div class="container">
+  <% if @bookings.count.zero? %>
+  <br><br>
+    <h1>You do not have any requests!</h1>
+  <% else %>
+  <br><br>
+  <h1>Booking requests</h1>
+  <% @bookings.each do |booking| %>
+    <div class="card mb-5 d-flex flex-row my-5" style="height: 20rem; overflow: hidden;">
+      <div class="card-image border m-2">
+        <%= cl_image_tag booking.book.photo.key, class: "h-100", style: "object-fit: contain;" %>
+      </div>
+      <div class="card-body w-70">
+        <h3><strong></strong><%= booking.book.title %></h3>
+        <p class="mb-0"><strong>By </strong><%= booking.book.author %></p>
+        <br>
+        <p class="mb-0"><strong>Requested by: </strong><%= booking.user.first_name %> <%= booking.user.last_name %></p>
+        <p class="mb-0"><strong>Start Date: </strong><%= booking.start_date %></p>
+        <p class="mb-0"><strong>Return Date: </strong><%= booking.end_date %></p>
+        <p class="mb-0"><strong>Price per day: </strong>£ <%= format('%.2f', booking.book.price) %></p>
+        <p class="mb-0"><strong>Total price: </strong>£ <%= format('%.2f', (booking.book.price * (booking.end_date - booking.start_date))) %></p>
+        <p class="mb-0"><strong>Owner: </strong><%= booking.book.user.first_name %> <%= booking.book.user.last_name %></p>
+      </div>
+      <div class="d-flex align-self-end p-3">
+        <div class="ms-3">
+          <%= simple_form_for booking, url: confirm_booking_path(booking) do |f| %>
+            <%= f.submit "Confirm", class: "btn-black-sm" %>
+          <% end %>
         </div>
-        <div class="align-self-end">
-          <%= link_to "Accept Request", "#" %>
-          <%= link_to "Decline Request", "#" %>
+        <div class="ms-3">
+          <%= simple_form_for booking, url: decline_booking_path(booking) do |f| %>
+            <%= f.submit "Decline", class: "btn-black-sm" %>
+          <% end %>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
-<% end %>
+  <% end %>
+  <% end %>
+</div>

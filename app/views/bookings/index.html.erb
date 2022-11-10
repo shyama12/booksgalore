@@ -1,23 +1,60 @@
 <div class="container">
+  <br><br>
+  <h1>Your bookings</h1>
   <% if @bookings.count.zero? %>
+  <br><br>
     <p>You do not have any bookings!</p>
   <% else %>
-  <% @bookings.each do |booking| %>
-    <div class="card mb-5 d-flex flex-row my-5" style="height: 18rem; overflow: hidden;">
-      <div class="card-image border m-2">
-        <%= cl_image_tag booking.book.photo.key, class: "h-100 w-100", style: "object-fit: contain;" %>
+    <% @bookings.each do |booking| %>
+      <div class="card mb-5 d-flex flex-row my-5" style="height: 20rem; overflow: hidden;">
+        <div class="card-image border m-2">
+          <%= cl_image_tag booking.book.photo.key, class: "h-100", style: "object-fit: contain;" %>
+        </div>
+        <div class="card-body w-70">
+          <h3><strong></strong><%= booking.book.title %></h3>
+          <p class="mb-0"><strong>By </strong><%= booking.book.author %></p>
+          <br>
+          <p class="mb-0"><strong>Start Date: </strong><%= booking.start_date %></p>
+          <p class="mb-0"><strong>Return Date: </strong><%= booking.end_date %></p>
+          <p class="mb-0"><strong>Price per day: </strong>£ <%= format('%.2f', booking.book.price) %></p>
+          <p class="mb-0"><strong>Total price: </strong>£ <%= format('%.2f', (booking.book.price * (booking.end_date - booking.start_date))) %></p>
+          <p class="mb-0"><strong>Owner: </strong><%= booking.book.user.first_name %> <%= booking.book.user.last_name %></p>
+          <p class="mb-0"><strong>Status: </strong>
+
+          <% if booking.status == "requested" %>
+          <span class="">Request placed</span>
+          <% end %>
+          <% if booking.status == "confirmed" %>
+          <span class="text-success">Booking confirmed by owner</span>
+          <% end %>
+          <% if booking.status == "declined" %>
+          <span class="text-danger">Booking declined by owner</span>
+          <% end %>
+          </p>
+        </div>
       </div>
-      <div class="card-body w-70">
-        <h3><strong></strong><%= booking.book.title %></h3>
-        <p class="mb-0"><strong>By </strong><%= booking.book.author %></p>
-        <br>
-        <p class="mb-0"><strong>Start Date: </strong><%= booking.start_date %></p>
-        <p class="mb-0"><strong>Return Date: </strong><%= booking.end_date %></p>
-        <p class="mb-0"><strong>Price per day: </strong>£ <%= format('%.2f', booking.book.price) %></p>
-        <p class="mb-0"><strong>Total price: </strong>£ <%= format('%.2f', (booking.book.price * (booking.end_date - booking.start_date))) %></p>
-        <p class="mb-0"><strong>Owner: </strong><%= booking.book.user.first_name %> <%= booking.book.user.last_name %></p>
-      </div>
-    </div>
+    <% end %>
   <% end %>
+  <% unless @lapsed_bookings.count.zero? %>
+    <br><br>
+    <h1>Lapsed bookings</h1>
+    <% @lapsed_bookings.each do |booking| %>
+      <div class="card mb-5 d-flex flex-row my-5" style="height: 20rem; overflow: hidden;">
+        <div class="card-image border m-2">
+          <%= cl_image_tag booking.book.photo.key, class: "h-100", style: "object-fit: contain;" %>
+        </div>
+        <div class="card-body w-70">
+          <h3><strong></strong><%= booking.book.title %></h3>
+          <p class="mb-0"><strong>By </strong><%= booking.book.author %></p>
+          <br>
+          <p class="mb-0"><strong>Start Date: </strong><%= booking.start_date %></p>
+          <p class="mb-0"><strong>Return Date: </strong><%= booking.end_date %></p>
+          <p class="mb-0"><strong>Price per day: </strong>£ <%= format('%.2f', booking.book.price) %></p>
+          <p class="mb-0"><strong>Total price: </strong>£ <%= format('%.2f', (booking.book.price * (booking.end_date - booking.start_date))) %></p>
+          <p class="mb-0"><strong>Owner: </strong><%= booking.book.user.first_name %> <%= booking.book.user.last_name %></p>
+          <p class="mb-0"><strong>Status: </strong>Lapsed</p>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>

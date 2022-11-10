@@ -42,21 +42,16 @@
   width: 100%;
 }
 
-.general-info-and-button {
-  display: flex;
-  justify-content: space-between;
-}
-
-.general-info-btn {
-  align-self: flex-end;
-
-  a {
+.btn-black-sm {
     text-decoration: none;
     color: white;
     font-size: 0.8em;
     background-color: black;
     padding: 5px 10px;
-  }
+
+    &:hover {
+      color: white;
+    }
 }
 
 // .card-category {
