@@ -20,6 +20,7 @@ class BooksController < ApplicationController
 
   def show
     @booking = Booking.new
+    @review = Review.new(book: @book)
   end
 
   def edit

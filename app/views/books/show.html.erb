@@ -21,7 +21,7 @@
     <br><br>
   </div>
   <div class="col-lg-6 p-5">
-    <div class="container bg-white shadow-sm p-2">
+    <div class="container bg-white shadow-sm p-3">
       <% if @book.user.first_name === current_user.first_name %>
          <div class="book-card-actions">
           <%= link_to "Edit Book", edit_book_path(@book), class: " btn-warning" %>
@@ -39,9 +39,40 @@
                     order: [:day, :month, :year] %>
         <%= f.submit "Request this book", class: "btn-black" %>
       <% end %>
-      <p>Total Price <%= format('%.2f', @book.price)  %> </p>
+      <p>Total Price <%= format('%.2f', @book.price) %> </p>
       <%# <p> days <%= "#{booking_end_date_3i}.value" - "#{booking_start_date_3i}.value"%>
    <% end %>
     </div>
+
+    </div>
   </div>
 </div>
+
+<div class="row">
+      <div class="col-12 col-sm-6">
+      <h2>Reviews</h2>
+      <% if @book.reviews.empty? %>
+        <small><em class="text-muted">Be the first one to review this book</em></small>
+      <% end %>
+      <% @book.reviews.each do |review| %>
+        <div>
+          <% review.rating.times do %>
+            <i class="far fa-star"></i>
+          <% end %>
+          <small><em class="text-muted"><%= distance_of_time_in_words_to_now(review.created_at) %> ago</em></small>
+          <p class="mb-0 text-solid"><%= review.content %></p>
+        </div>
+        <hr>
+      <% end %>
+      </div>
+      <div class="col-12 col-sm-6">
+      <div class="bg-white rounded p-3">
+        <h2 class="text-center">Add your review</h2>
+        <%= simple_form_for [@book, @review] do |f| %>
+          <%= f.input :content, placeholder: "Add your review here..." %>
+          <%= f.input :rating, as: :select, collection: (1..5), required: true, prompt: "What's your rating", input_html: { data: { controller: "star-rating" } } %>
+          <%= f.submit class:"btn-black" %>
+        <% end %>
+      </div>
+      </div>
+  </div>
