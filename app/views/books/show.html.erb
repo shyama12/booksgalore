@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-lg-8 p-5">
+  <div class="col-lg-6 p-5">
     <h1><%= @book.title %></h1>
     <div class="d-flex justify-content-start align-items-center">
       <%= cl_image_tag @book.photo.key, class: "my-5", crop: :fill, width: '280', height: '430' %>
       <br>
     </div>
-    <div class="my-5">
+    <div class="my-2">
       <strong>Author:</strong> <%= @book.author %>
       <br>
       <strong>Genre:</strong> <%= @book.genre %>
@@ -20,9 +20,16 @@
     <%= @book.summary %>
     <br><br>
   </div>
-  <div class="col-lg-4 p-5">
-    <div class="container bg-white shadow-sm p-5">
-      <h1 class="pb-5">Rent this book</h1>
+  <div class="col-lg-6 p-5">
+    <div class="container bg-white shadow-sm p-2">
+      <% if @book.user.first_name === current_user.first_name %>
+         <div class="book-card-actions">
+          <%= link_to "Edit Book", edit_book_path(@book), class: " btn-warning" %>
+          <%= link_to "Remove Book", book_path(@book),
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{@book.author}'s book?"}, class: 'btn-danger' %>
+          </div>
+         <% else %>
+        <h2 class="pb-5 text-center">Rent this book</h2>
       <%= simple_form_for [@book, @booking] do |f| %>
         <%= f.input :start_date, as: :date, start_year: Date.today.year,
                     end_year: Date.today.year + 12,
@@ -32,6 +39,9 @@
                     order: [:day, :month, :year] %>
         <%= f.submit "Request this book", class: "btn-black" %>
       <% end %>
+      <p>Total Price <%= format('%.2f', @book.price)  %> </p>
+      <%# <p> days <%= "#{booking_end_date_3i}.value" - "#{booking_start_date_3i}.value"%>
+   <% end %>
     </div>
   </div>
 </div>
