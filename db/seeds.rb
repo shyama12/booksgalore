@@ -11,6 +11,7 @@ puts "Start"
 Book.destroy_all
 Booking.destroy_all
 User.destroy_all
+Review.destroy_all
 puts "DB is clean"
 
 shyama = User.new(first_name: "Shyama",
@@ -70,6 +71,15 @@ html_doc.search(".book-item").first(20).each do |book|
   photo_file = URI.open(html_doc_book.search(".item-img-content img").attribute("src"))
   book.photo.attach(io: photo_file, filename: "book#{book.id}_image.png", content_type: "image/png")
   book.save
+  reviews_count = rand(0..3)
+  reviews_count.times do
+    review = Review.new(content: Faker::Lorem.paragraph(sentence_count: 1),
+                        rating: rand(1..5),
+                        book: book,
+                        user_id: rand(User.first.id..User.last.id))
+    review.save
+    puts "Review with id #{review.id} created"
+  end
   puts "Created book with id #{book.id}"
 end
 

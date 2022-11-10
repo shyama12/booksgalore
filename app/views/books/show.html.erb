@@ -1,75 +1,95 @@
-<div class="row">
-  <div class="col-lg-6 p-5">
-    <h1><%= @book.title %></h1>
-    <div class="d-flex justify-content-start align-items-center">
-      <%= cl_image_tag @book.photo.key, class: "my-5", crop: :fill, width: '280', height: '430' %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 p-5">
+      <h1><%= @book.title %></h1>
+      <div class="d-flex justify-content-start align-items-center">
+        <%= cl_image_tag @book.photo.key, class: "my-5", crop: :fill, width: '280', height: '430' %>
+        <br>
+      </div>
+      <div class="my-2">
+        <strong>Author:</strong> <%= @book.author %>
+        <br>
+        <strong>Genre:</strong> <%= @book.genre %>
+        <br>
+        <strong>Price per day: </strong>£ <%= format('%.2f', @book.price) %>
+        <br>
+        <strong>Owner: </strong> <%= @book.user.first_name %> <%= @book.user.last_name %>
+        <br><br>
+      </div>
+      <strong>Summary: </strong>
       <br>
-    </div>
-    <div class="my-2">
-      <strong>Author:</strong> <%= @book.author %>
-      <br>
-      <strong>Genre:</strong> <%= @book.genre %>
-      <br>
-      <strong>Price per day: </strong>£ <%= format('%.2f', @book.price) %>
-      <br>
-      <strong>Owner: </strong> <%= @book.user.first_name %> <%= @book.user.last_name %>
+      <%= @book.summary %>
       <br><br>
     </div>
-    <strong>Summary: </strong>
-    <br>
-    <%= @book.summary %>
-    <br><br>
-  </div>
-  <div class="col-lg-6 p-5">
-    <div class="container bg-white shadow-sm p-3">
-      <% if @book.user === current_user %>
-         <div class="book-card-actions">
-            <%= link_to "Edit Book", edit_book_path(@book), class: " btn-warning" %>
-            <%= link_to "Remove Book", book_path(@book),
-            data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{@book.author}'s book?"}, class: 'btn-danger' %>
+    <div class="col-lg-6 p-5">
+      <div class="container bg-white shadow-sm p-3">
+        <% if @book.user === current_user %>
+           <div class="book-card-actions">
+              <%= link_to "Edit Book", edit_book_path(@book), class: " btn-warning" %>
+              <%= link_to "Remove Book", book_path(@book),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{@book.author}'s book?"}, class: 'btn-danger' %>
+            </div>
+        <% else %>
+          <h2 class="pb-5 text-center">Rent this book</h2>
+          <div data-controller="total-price-calculation">
+            <p display="none", id="ppd", value="<%= @book.price %>" data-total-price-calculation-target="ppd"></p>
+            <%= simple_form_for [@book, @booking] do |f| %>
+              <div data-total-price-calculation-target="start">
+                <%= f.input :start_date, as: :date, start_year: Date.today.year,
+                            end_year: Date.today.year + 12,
+                            order: [:day, :month, :year], input_html: { data: { action: "change->total-price-calculation#calcPrice" } } %>
+              </div>
+              <div data-total-price-calculation-target="end">
+                <%= f.input :end_date, as: :date, start_year: Date.today.year,
+                            end_year: Date.today.year + 12,
+                            order: [:day, :month, :year], input_html: { data: { action: "change->total-price-calculation#calcPrice" } } %>
+              </div>
+              <p class="text-align-center" data-total-price-calculation-target="total"></p>
+              <%= f.submit "Request this book", class: "btn-black" %>
+            <% end %>
           </div>
-      <% else %>
-        <h2 class="pb-5 text-center">Rent this book</h2>
-        <%= simple_form_for [@book, @booking] do |f| %>
-          <%= f.input :start_date, as: :date, start_year: Date.today.year,
-                      end_year: Date.today.year + 12,
-                      order: [:day, :month, :year] %>
-          <%= f.input :end_date, as: :date, start_year: Date.today.year,
-                      end_year: Date.today.year + 12,
-                      order: [:day, :month, :year] %>
-          <%= f.submit "Request this book", class: "btn-black" %>
         <% end %>
-        <p>Total Price <%= format('%.2f', @book.price) %> </p>
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
-
-<div class="row">
-  <div class="col-12 col-sm-6">
-  <h2>Reviews</h2>
-  <% if @book.reviews.empty? %>
-    <small><em class="text-muted">Be the first one to review this book</em></small>
-  <% end %>
-  <% @book.reviews.each do |review| %>
-    <div>
-      <% review.rating.times do %>
-        <i class="far fa-star"></i>
+  <hr>
+  <div class="row">
+    <div class="col-lg-6 p-5">
+      <h2>Reviews</h2>
+      <% if @book.reviews.empty? %>
+        <small><em class="text-muted">Be the first one to review this book</em></small>
       <% end %>
-      <small><em class="text-muted"><%= distance_of_time_in_words_to_now(review.created_at) %> ago</em></small>
-      <p class="mb-0 text-solid"><%= review.content %></p>
+      <% @book.reviews.each do |review| %>
+        <div>
+          <div class="d-flex">
+            <%= cl_image_tag review.user.photo.key, class: "avatar", width: 40, height: 40 %>
+            <div class="ms-3">
+              <strong><%= review.user.first_name %> <%= review.user.last_name %></strong>
+              <div class="book-rating-stars">
+                <% (review.rating).times do %>
+                  <i class="fa-solid fa-star"></i>
+                <% end %>
+                <% (5 - review.rating).times do %>
+                  <i class="fa-regular fa-star"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <small><em class="text-muted"><%= distance_of_time_in_words_to_now(review.created_at) %> ago</em></small>
+          <p class="mb-0 text-solid"><%= review.content %></p>
+        </div>
+        <hr>
+      <% end %>
     </div>
-    <hr>
-  <% end %>
-  </div>
-  <div class="col-12 col-sm-6">
-  <div class="bg-white rounded p-3">
-    <h2 class="text-center">Add your review</h2>
-    <%= simple_form_for [@book, @review] do |f| %>
-      <%= f.input :content, placeholder: "Add your review here..." %>
-      <%= f.input :rating, as: :select, collection: (1..5), required: true, prompt: "What's your rating", input_html: { data: { controller: "star-rating" } } %>
-      <%= f.submit class:"btn-black" %>
-    <% end %>
-  </div>
+    <div class="col-lg-6 p-5">
+      <div class="bg-white rounded p-3">
+        <h2 class="text-center">Add your review</h2>
+        <%= simple_form_for [@book, @review] do |f| %>
+          <%= f.input :content, placeholder: "Add your review here..." %>
+          <%= f.input :rating, as: :select, collection: (1..5), required: true, prompt: "What's your rating", input_html: { data: { controller: "star-rating" } } %>
+          <%= f.submit class:"btn-black" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

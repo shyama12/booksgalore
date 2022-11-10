@@ -15,6 +15,7 @@ class BookingsController < ApplicationController
     if @booking.save
       redirect_to bookings_path, notice: "Request sent to #{@booking.book.user.first_name} #{@booking.book.user.last_name} for #{@booking.book.title}".html_safe
     else
+      @review = Review.new(book: @book)
       render 'books/show', status: :unprocessable_entity
     end
   end
