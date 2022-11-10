@@ -1,6 +1,6 @@
 // Specific CSS for your home-page
 .banner {
-  height: 100vh;
+  height: 85vh;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
@@ -10,18 +10,22 @@
   background-size: cover;
   background-position: center;
   h2 {
-    color: white;
+    color: #343434;
   font-weight: bold;
   font-size: 45px;
   }
   .btn {
-    padding: 20px 35px;
-    font-size: 30px;
+    padding: 20px 30px;
+    font-size: 25px;
     margin-top: 15px;
     font-weight: lighter;
-    color: white;
-    background-color: rgb(14, 14, 183);
-    border-radius: 9px;
+    background-color: #343434;
+    color: #faf0be;
+    border: none;
+  }
+  .btn:active {
+    background-color: #000;
+    color: #ffffff;
   }
 }
 .header {
