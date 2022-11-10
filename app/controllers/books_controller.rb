@@ -3,9 +3,9 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
     if params[:query].present?
-      @books = Book.search_by_title_and_author_and_genre(params[:query])
+      @books = Book.is_available.search_by_title_and_author_and_genre(params[:query])
     else
-      @books = Book.where(available: true)
+      @books = Book.is_available
     end
   end
 

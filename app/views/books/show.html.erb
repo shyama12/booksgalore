@@ -2,6 +2,12 @@
   <div class="row">
     <div class="col-lg-6 p-5">
       <h1><%= @book.title %></h1>
+        <% if @book.user === current_user %>
+              <%= link_to '<i class="fa-solid fa-pencil"></i>Edit'.html_safe, edit_book_path(@book), class: "fs-6 text-decoration-none" %>
+              &nbsp;&nbsp;<span class="text-primary">&#x2022;</span>&nbsp;&nbsp;
+              <%= link_to '<i class="fa-solid fa-trash"></i>Delete'.html_safe, book_path(@book),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{@book.author}'s book?"}, class: "fs-6 text-decoration-none" %>
+        <% end %>
       <div class="d-flex justify-content-start align-items-center">
         <%= cl_image_tag @book.photo.key, class: "my-5", crop: :fill, width: '280', height: '430' %>
         <br>
@@ -22,14 +28,8 @@
       <br><br>
     </div>
     <div class="col-lg-6 p-5">
-      <div class="container bg-white shadow-sm p-3">
-        <% if @book.user === current_user %>
-           <div class="book-card-actions">
-              <%= link_to "Edit Book", edit_book_path(@book), class: " btn-warning" %>
-              <%= link_to "Remove Book", book_path(@book),
-              data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{@book.author}'s book?"}, class: 'btn-danger' %>
-            </div>
-        <% else %>
+      <% unless @book.user === current_user %>
+        <div class="container bg-white shadow-sm p-3">
           <h2 class="pb-5 text-center">Rent this book</h2>
           <div data-controller="total-price-calculation">
             <p display="none", id="ppd", value="<%= @book.price %>" data-total-price-calculation-target="ppd"></p>
@@ -48,8 +48,8 @@
               <%= f.submit "Request this book", class: "btn-black" %>
             <% end %>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <hr>

@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   def index
-    @bookings = Booking.where(user_id: current_user.id, start_date: Date.today..)
-    @lapsed_bookings = Booking.where(user_id: current_user.id, start_date: ...Date.today, status: "requested")
+    @bookings = Booking.where(user_id: current_user.id, start_date: Date.today..).order("created_at DESC")
+    @lapsed_bookings = Booking.where(user_id: current_user.id, start_date: ...Date.today, status: "requested").order("created_at DESC")
   end
 
   def create
@@ -21,7 +21,7 @@ class BookingsController < ApplicationController
   end
 
   def requested
-    @bookings = Booking.joins(:book).where(books: { user_id: current_user.id }, bookings: { status: "requested", start_date: Date.today.. })
+    @bookings = Booking.joins(:book).where(books: { user_id: current_user.id }, bookings: { status: "requested", start_date: Date.today.. }).order("bookings.created_at DESC")
   end
 
   def confirm

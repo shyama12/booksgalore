@@ -3,6 +3,7 @@ class Book < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_one_attached :photo
   has_many :reviews, dependent: :destroy
+  scope :is_available, -> { where(available: true) }
   validates :title, presence: true
   validates :author, presence: true
   validates :genre, presence: true
