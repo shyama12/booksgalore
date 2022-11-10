@@ -2,7 +2,11 @@ class BooksController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
-    @books = Book.where(available: true)
+    if params[:query].present?
+      @books = Book.search_by_title_and_author_and_genre(params[:query])
+    else
+      @books = Book.where(available: true)
+    end
   end
 
   def new
