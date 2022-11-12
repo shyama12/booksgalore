@@ -82,9 +82,10 @@ html_doc.search(".book-item").first(35).each do |book|
   book.photo.attach(io: photo_file, filename: "book#{book.id}_image.png", content_type: "image/png")
   book.save
   reviews_count = rand(0..3)
+  random_reviews = ["Nice book!", "Would highly recommend.", "A great read.", "A real page turner!"]
   reviews_count.times do
-    review = Review.new(content: Faker::Lorem.paragraph(sentence_count: 1),
-                        rating: rand(1..5),
+    review = Review.new(content: random_reviews.sample,
+                        rating: rand(3..5),
                         book: book,
                         user_id: rand(User.first.id..User.last.id))
     review.save
