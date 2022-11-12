@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
     if params[:query].present?
@@ -33,7 +33,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update(book_params)
-      redirect_to book_path(@book), notice: "Your book has been updated"
+      redirect_to book_path(@book), notice: "Your book has been updated."
     else
       render :new, status: :unprocessable_entity
     end

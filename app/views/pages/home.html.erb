@@ -2,14 +2,24 @@
     <div>
       <p style="color: #FAF9E3FF; text-shadow: 1px 1px #1C1B02FF; font-style: italic; font-size: 1.5em; height: 1em;"><span data-controller="typed"></span></p>
     </div>
+    <br><br>
     <%= link_to "Browse all books",  books_path, class:'btn' %>
   </div>
 
-  <div class="header">
-    <h2> Books of the Week</h2>
+  <div class="cards-wrapper">
+    <h2> Newly added books</h2>
   </div>
   <div class="cards-wrapper">
-      <% @books.each do |book| %>
+      <% @books_of_the_week.each do |book| %>
+        <%= render 'books/book_card', book: book %>
+      <% end %>
+  </div>
+
+  <div class="cards-wrapper">
+    <h2> Books on a budget</h2>
+  </div>
+  <div class="cards-wrapper">
+      <% @budget_books.each do |book| %>
         <%= render 'books/book_card', book: book %>
       <% end %>
   </div>

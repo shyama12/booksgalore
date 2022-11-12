@@ -1,22 +1,27 @@
 class BookingsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:create]
   def index
-    @bookings = Booking.where(user_id: current_user.id, start_date: Date.today..).order("created_at DESC")
-    @lapsed_bookings = Booking.where(user_id: current_user.id, start_date: ...Date.today, status: "requested").order("created_at DESC")
+    @bookings = Booking.where(user_id: current_user.id, start_date: Date.today..).order("updated_at DESC")
+    @lapsed_bookings = Booking.where(user_id: current_user.id, start_date: ...Date.today, status: "requested").order("updated_at DESC")
   end
 
   def create
     @book = Book.find(params[:book_id])
-    @booking = Booking.new(booking_params)
-    @booking.book = @book
-    @booking.user = current_user
-    @booking.status = "requested"
-    @booking.book.available = false
-    @booking.book.save
-    if @booking.save
-      redirect_to bookings_path, notice: "Request sent to #{@booking.book.user.first_name} #{@booking.book.user.last_name} for #{@booking.book.title}".html_safe
+    if user_signed_in?
+      @booking = Booking.new(booking_params)
+      @booking.book = @book
+      @booking.user = current_user
+      @booking.status = "requested"
+      @booking.book.available = false
+      @booking.book.save
+      if @booking.save
+        redirect_to bookings_path, notice: "Request sent to #{@booking.book.user.first_name} #{@booking.book.user.last_name} for #{@booking.book.title}".html_safe
+      else
+        @review = Review.new(book: @book)
+        render 'books/show', status: :unprocessable_entity
+      end
     else
-      @review = Review.new(book: @book)
-      render 'books/show', status: :unprocessable_entity
+      redirect_to user_session_path, notice: "You need to sign in or sign up before continuing."
     end
   end
 
