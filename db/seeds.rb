@@ -53,7 +53,7 @@ puts "Created #{User.count} users"
 url = "https://www.bookdepository.com/bestsellers"
 html_file = URI.open(url).read
 html_doc = Nokogiri::HTML(html_file)
-html_doc.search(".book-item").first(20).each do |book|
+html_doc.search(".book-item").first(35).each do |book|
   begin
     book_url = "https://www.bookdepository.com/#{book.search(".item-img a").attribute("href")}"
     html_file_book = URI.open(book_url).read
@@ -62,13 +62,23 @@ html_doc.search(".book-item").first(20).each do |book|
     next
   end
   html_doc_book = Nokogiri::HTML(html_file_book)
-  book = Book.new(title: html_doc_book.search("h1").text.strip,
-                  author: html_doc_book.search(".author-info a").text.strip,
-                  genre: Faker::Book.genre,
-                  price: rand(100..500) / 100,
-                  user_id: rand(User.first.id..User.last.id),
-                  summary: html_doc_book.search(".item-excerpt").text.strip.delete_suffix!("show more").strip[0, 1000])
-  photo_file = URI.open(html_doc_book.search(".item-img-content img").attribute("src"))
+  begin
+    book = Book.new(title: html_doc_book.search("h1").text.strip,
+                    author: html_doc_book.search(".author-info a").text.strip,
+                    genre: Faker::Book.genre,
+                    price: (rand(1..10)).fdiv(4),
+                    user_id: rand(User.first.id..User.last.id),
+                    summary: html_doc_book.search(".item-excerpt").text.strip.delete_suffix!("show more").strip[0, 1000])
+  rescue => e
+    puts e
+    next
+  end
+  begin
+    photo_file = URI.open(html_doc_book.search(".item-img-content img").attribute("src"))
+  rescue => e
+    puts e
+    next
+  end
   book.photo.attach(io: photo_file, filename: "book#{book.id}_image.png", content_type: "image/png")
   book.save
   reviews_count = rand(0..3)

@@ -21,7 +21,7 @@ export default class extends Controller {
       let time_difference = end_date.getTime() - start_date.getTime();
       time_difference /= 1000*60*60*24;
 
-      const ppd = Number.parseInt(this.ppdTarget.getAttribute("value"), 10);
+      const ppd = Number(this.ppdTarget.getAttribute("value"), 10);
       this.totalTarget.innerText = `Total price: £${(time_difference * ppd).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     }else {
       this.totalTarget.innerText = `End date should be a date after start date`;
